@@ -1,0 +1,32 @@
+# Xcode
+.DS_Store
+/.build
+/Packages
+/*.xcodeproj
+xcuserdata/
+DerivedData/
+.swiftpm/configuration/registries.json
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.netrc
+
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Xcode Projects
+*.xcodeproj/
+*.xcworkspace/
+
+# Testing
+.coverage/
+*.xcresult
+
+# ZimSync specific
+sync-test-data/
+*.log
