@@ -222,10 +222,12 @@ extension PacketHeader {
         
         var offset = 0
         
-        let _ = data[offset..<offset+4].withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
+        // Magic number
+        var magicBytes = Data(data[offset..<offset+4])
+        let magic = magicBytes.withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
         offset += 4
         
-        let _ = data[offset]
+        let version = data[offset]
         offset += 1
         
         guard let type = PacketType(rawValue: data[offset]) else {
@@ -236,15 +238,23 @@ extension PacketHeader {
         let flags = PacketFlags(rawValue: data[offset])
         offset += 1
         
-        let sequenceNumber = data[offset..<offset+2].withUnsafeBytes { $0.load(as: UInt16.self).bigEndian }
+        // Sequence number
+        var seqBytes = Data(data[offset..<offset+2])
+        let sequenceNumber = seqBytes.withUnsafeBytes { $0.load(as: UInt16.self).bigEndian }
         offset += 2
         
-        let payloadSize = data[offset..<offset+4].withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
+        // Payload size
+        var sizeBytes = Data(data[offset..<offset+4])
+        let payloadSize = sizeBytes.withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
         offset += 4
         
-        let checksum = data[offset..<offset+4].withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
+        // Checksum
+        var checksumBytes = Data(data[offset..<offset+4])
+        let checksum = checksumBytes.withUnsafeBytes { $0.load(as: UInt32.self).bigEndian }
         
         return PacketHeader(
+            magic: magic,
+            version: version,
             type: type,
             flags: flags,
             sequenceNumber: sequenceNumber,

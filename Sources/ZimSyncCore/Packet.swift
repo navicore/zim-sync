@@ -23,6 +23,16 @@ public struct PacketHeader {
         self.payloadSize = payloadSize
         self.checksum = checksum
     }
+    
+    public init(magic: UInt32, version: UInt8, type: PacketType, flags: PacketFlags, sequenceNumber: UInt16, payloadSize: UInt32, checksum: UInt32) {
+        self.magic = magic
+        self.version = version
+        self.type = type
+        self.flags = flags
+        self.sequenceNumber = sequenceNumber
+        self.payloadSize = payloadSize
+        self.checksum = checksum
+    }
 }
 
 // MARK: - Packet Flags
